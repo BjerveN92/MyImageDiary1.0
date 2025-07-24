@@ -1,5 +1,5 @@
 package com.example.MyImageDiary10.DTOs;
 
-public class WeatherResponseDTO {
+public class EntryRequest {
 
 }
