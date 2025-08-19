@@ -22,6 +22,7 @@ public class User {
     private String username;
     private String Email;
     private String password;
+    private String profileImageURL;
 
-    private List<Entry> entries;
+    private List<Entry> entries; // list of entries
 }
