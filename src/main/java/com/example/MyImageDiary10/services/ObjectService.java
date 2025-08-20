@@ -5,7 +5,7 @@ public abstract class ObjectService<T> {
     public abstract T create(T obj);
 
     // read one object
-    public abstract T read(String id);
+    public abstract T getById(String id);
 
     // updates one object
     public abstract T update(String id, T obj);
