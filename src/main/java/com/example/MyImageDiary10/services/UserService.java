@@ -2,6 +2,8 @@ package com.example.MyImageDiary10.services;
 
 import org.springframework.stereotype.Service;
 
+import com.example.MyImageDiary10.DTOs.userDTOs.RegisterRequest;
+import com.example.MyImageDiary10.DTOs.userDTOs.UpdateUserRequest;
 import com.example.MyImageDiary10.DTOs.userDTOs.UserResponse;
 import com.example.MyImageDiary10.repositories.UserRepository;
 
@@ -9,12 +11,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService extends ObjectService<UserResponse> {
+public class UserService extends ObjectService<UserResponse, RegisterRequest, UpdateUserRequest> {
     private final UserRepository userRepository;
+    private final CloudinaryService cloudinaryService;
 
     // create a user (REGISTER)
     @Override
-    public UserResponse create(UserResponse newUser) {
+    public UserResponse create(RegisterRequest newUser) {
         return null;
     }
 
@@ -32,16 +35,16 @@ public class UserService extends ObjectService<UserResponse> {
 
     // update the user by Id
     @Override
-    public UserResponse update(String id, UserResponse existingUser) {
+    public UserResponse update(String id, UpdateUserRequest existingUser) {
         return userRepository.findById(id)
                 .map(user -> {
-                    // Update userfileds
                     user.setUsername(existingUser.getUsername());
-                    user.setProfileImageURL(existingUser.getProfileImageURL());
-                    // Save the updated user
+                    if (existingUser.getProfileImage() != null && !existingUser.getProfileImage().isEmpty()) {
+                        // uploads image to cloudinary, yeeey!
+                        String imageUrl = cloudinaryService.uploadImage(existingUser.getProfileImage());
+                        user.setProfileImageURL(imageUrl);
+                    }
                     userRepository.save(user);
-
-                    // Return the updated user
                     return UserResponse.builder()
                             .id(user.getId())
                             .username(user.getUsername())
