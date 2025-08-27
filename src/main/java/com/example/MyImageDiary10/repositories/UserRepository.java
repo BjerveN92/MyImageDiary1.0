@@ -1,5 +1,13 @@
 package com.example.MyImageDiary10.repositories;
 
-public interface UserRepository {
+import java.util.Optional;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.example.MyImageDiary10.models.User;
+
+public interface UserRepository extends MongoRepository<User, String> {
+    Optional<User> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }
