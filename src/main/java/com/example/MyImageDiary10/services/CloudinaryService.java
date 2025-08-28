@@ -17,7 +17,7 @@ public class CloudinaryService {
 
     private final Cloudinary cloudinary;
 
-    public String uploadImage(MultipartFile profileImage) {
+    public String uploadProfileImage(MultipartFile profileImage) {
         try {
             Map uploadResult = cloudinary.uploader().upload(
                     profileImage.getBytes(),
