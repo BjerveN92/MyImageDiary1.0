@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.MyImageDiary10.DTOs.userDTOs.LoginRequest;
 import com.example.MyImageDiary10.DTOs.userDTOs.RegisterRequest;
 import com.example.MyImageDiary10.DTOs.userDTOs.UpdateUserRequest;
 import com.example.MyImageDiary10.DTOs.userDTOs.UserResponse;
@@ -19,7 +20,8 @@ public class UserService extends ObjectService<UserResponse, RegisterRequest, Up
     private final CloudinaryService cloudinaryService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    // create a user (REGISTER)
+    // ===== CREATE (REGISTER) =====
+
     @Override
     public UserResponse create(RegisterRequest newUser) {
 
@@ -41,7 +43,8 @@ public class UserService extends ObjectService<UserResponse, RegisterRequest, Up
                 .build();
     }
 
-    // read one user by ID
+    // ===== READ (ONE) =====
+
     @Override
     public UserResponse getById(String id) {
         return userRepository.findById(id)
@@ -53,7 +56,8 @@ public class UserService extends ObjectService<UserResponse, RegisterRequest, Up
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    // update the user by Id
+    // ===== UPDATE =====
+
     @Override
     public UserResponse update(String id, UpdateUserRequest existingUser) {
         return userRepository.findById(id)
@@ -77,9 +81,26 @@ public class UserService extends ObjectService<UserResponse, RegisterRequest, Up
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    // delete one user
+    // ===== DELETE =====
+
     @Override
     public void delete(String id) {
         userRepository.deleteById(id);
     }
+    // ===== LOGIN USER (NON_DEFAULT_METHOD) =====
+
+    public UserResponse login(LoginRequest loginRequest) {
+        User user = userRepository.findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new RuntimeException("Wrong username or password"));
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Wrong username or password");
+        }
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .profileImageURL(user.getProfileImageURL())
+                .build();
+    }
+
 }

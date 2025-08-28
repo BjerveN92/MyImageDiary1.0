@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntryResponse {
+public class EntryResponseListItem {
     private String id;
     private String title;
-    private String content;
     private String entryImageURL;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private ZonedDateTime createdAt;

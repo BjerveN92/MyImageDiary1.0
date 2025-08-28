@@ -1,6 +1,6 @@
 package com.example.MyImageDiary10.models;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,8 +22,7 @@ public class Entry {
     private String title;
     private String content;
     private String entryImageURL;
-    private LocalDate createdAt; // This will be handeled by Json formatter later on when decided what format i
-                                 // will use
+    private ZonedDateTime createdAt;
 
     private String userId; // refering to the user-model
 }
