@@ -1,23 +1,22 @@
 package com.example.MyImageDiary10.DTOs.entryDTOs;
 
-import java.time.ZonedDateTime;
+// import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+// import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@EqualsAndHashCode(callSuper = true) // Alla fält från superklassen skall ärvas till denna
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntryResponse {
-    private String id;
-    private String title;
+public class EntryResponse extends EntryResponseListItem {
+
     private String content;
-    private String entryImageURL;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private ZonedDateTime createdAt;
+
 }
