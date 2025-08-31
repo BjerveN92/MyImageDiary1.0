@@ -34,7 +34,16 @@ public class EntryService extends ObjectService<EntryResponse, EntryRequest, Ent
         entry.setContent(newEntry.getContent());
         entry.setCreatedAt(ZonedDateTime.now());
         entry.setEntryImageURL(imageURL);
-        return null;
+
+        entryRepository.save(entry);
+
+        return EntryResponse.builder()
+                .id(entry.getId())
+                .title(entry.getTitle())
+                .content(entry.getContent())
+                .entryImageURL(entry.getEntryImageURL())
+                .createdAt(entry.getCreatedAt())
+                .build();
     }
 
     // ===== READ (ONE) =====
