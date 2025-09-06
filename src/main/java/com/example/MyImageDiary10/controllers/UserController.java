@@ -28,19 +28,19 @@ public class UserController {
 
     // ===============Register user===============
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@ModelAttribute RegisterRequest request) {
+    public ResponseEntity<UserResponse> registerUser(@ModelAttribute RegisterRequest request) {
         return ResponseEntity.ok(userService.create(request));
     }
 
     // ===============Login user===============
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<UserResponse> loginUser(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(userService.login(loginRequest));
     }
 
     // ===============Get user by id===============
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getMethodName(@PathVariable String id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getById(id));
     }
 
